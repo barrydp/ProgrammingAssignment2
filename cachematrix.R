@@ -5,24 +5,24 @@
 
 makeCacheMatrix <- function(x = matrix()) 
 {
-	##  First make sure the cache is empty by setting it to NULL
-	CachedInverseMatrix <- NULL
+    ##  First make sure the cache is empty by setting it to NULL
+    CachedInverseMatrix <- NULL
 	
-	## Now start the functions needed.
-	##  Set sets x in the parent directory
-    set <- function(y) 
-	{
+    ## Now start the functions needed.
+    ##  Set sets x in the parent directory
+    set <- function(y)
+    {
         x <<- y
         CachedInverseMatrix <<- NULL
     }
 	
-	# Get returns the matrix in x in parent directory
+    ## Get returns the matrix in x in parent directory
     get <- function() x
 	
-	## Set the cache with the given matrix
+    ## Set the cache with the given matrix
     setmatrix <- function(matrix) CachedInverseMatrix <<- matrix
 	
-	## get the cached matrix and return it to calling function
+    ## get the cached matrix and return it to calling function
     getmatrix <- function() CachedInverseMatrix
 	
     list(set = set, get = get,
@@ -35,22 +35,22 @@ cacheSolve <- function(x, ...)
 {
     ## Return a matrix that is the inverse of 'x'
 	
-	## First check to see if the inverse already exists in the cache;
-	## if it is, return it and quit further execution
-	CachedInverseMatrix <- x$getmatrix()
+    ## First check to see if the inverse already exists in the cache;
+    ## if it is, return it and quit further execution
+    CachedInverseMatrix <- x$getmatrix()
     if(!is.null(CachedInverseMatrix)) 
-	{
+    {
         message("getting cached data")
         return(CachedInverseMatrix)
     }
 	
-	## If the data is not in the cache, compute it
+    ## If the data is not in the cache, compute it
     data <- x$get()
     CachedInverseMatrix <- solve(data, ...)
 	
-	## Once computed, put it in the cache
+    ## Once computed, put it in the cache
     x$setmatrix(CachedInverseMatrix)
 	
-	## Then return the inverse matrix
+    ## Then return the inverse matrix
     CachedInverseMatrix
 }
